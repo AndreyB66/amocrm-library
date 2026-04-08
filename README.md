@@ -19,9 +19,6 @@
     ],
     "require": {
         "integrat/amocrm-library": "*"
-    },
-    "config": {
-        "secure-http": false
     }
 }
 ```
@@ -47,9 +44,6 @@
     ],
     "require": {
         "integrat/amocrm-library": "*"
-    },
-    "config": {
-        "secure-http": false
     }
 }
 ```
