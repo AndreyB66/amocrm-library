@@ -8,17 +8,20 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Integrat\\Amocrm\\": "vendor/integrat/amocrm-library/src/Integrat/Amocrm/" // Необходимо явно указать
+            "Integrat\\Amocrm\\": "vendor/integrat/amocrm-library/src/Integrat/Amocrm/"
         }
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/integrat/amocrm-library"
+            "url": "https://github.com/AndreyB66/amocrm-library.git"
         }
     ],
     "require": {
-        "integrat/amocrm-library": "^1.0"
+        "integrat/amocrm-library": "*"
+    },
+    "config": {
+        "secure-http": false
     }
 }
 ```
@@ -33,17 +36,20 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Integrat\\Amocrm\\": "vendor/integrat/amocrm-library/src/Integrat/Amocrm/" // Необходимо явно указать
+            "Integrat\\Amocrm\\": "vendor/integrat/amocrm-library/src/Integrat/Amocrm/"
         }
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/integrat/amocrm-library"
+            "url": "https://github.com/AndreyB66/amocrm-library.git"
         }
     ],
     "require": {
-        "integrat/amocrm-library": "^1.0"
+        "integrat/amocrm-library": "*"
+    },
+    "config": {
+        "secure-http": false
     }
 }
 ```
