@@ -138,6 +138,38 @@ class LeadRepository
         return $models;
     }
 
+    public function findFirstContact(int $leadId): ?ContactModel
+    {
+        // Получаем все связи
+        $result = $this->request->get('/leads/' . $leadId . '/links');
+
+        if (empty($result['_embedded']['links'])) {
+            return null;
+        }
+
+        // Вычленяем только контакты
+        $contactId = 0;
+        foreach ($result['_embedded']['links'] as $entity) {
+            if ($entity['to_entity_type'] == 'contacts') {
+                $contactId = $entity['to_entity_id'];
+                break;
+            }
+        }
+        
+        if (empty($contactId)) {
+            return null;
+        }
+
+        // Получаем весь контакт отдельным запросом
+        $result = $this->request->get('/contacts/' . $contactId);
+
+        if (empty($result['id'])) {
+            return null;
+        }
+
+        return new ContactModel($result);
+    }
+
     public function findCompany(int $leadId): ?CompanyModel
     {
         // Получаем все связи
