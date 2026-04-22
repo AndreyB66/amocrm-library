@@ -45,7 +45,7 @@ class LeadModel
         $this->updatedAt = $data['updated_at'] ?? null;
         $this->closedAt = $data['closed_at'] ?? null;
         $this->closestTaskAt = $data['closest_task_at'] ?? null;
-        $this->isDeleted = $data['is_deleted'] ?? null;
+        $this->isDeleted = $data['is_deleted'] ?? false;
         $this->customFieldsValues = $data['custom_fields_values'] ?? null;
         $this->score = $data['score'] ?? null;
         $this->laborCost = $data['labor_cost'] ?? null;

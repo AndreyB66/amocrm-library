@@ -36,7 +36,7 @@ class NoteService
             throw new \InvalidArgumentException('Передан не верный тип сущности для прикрепления примечания');
         }
 
-        $result = $this->request->post('/' . $entityType . '/' . $entityId. '/notes/' . $noteId, $data);
+        $result = $this->request->patch('/' . $entityType . '/' . $entityId. '/notes/' . $noteId, $data);
 
         if (empty($result['_embedded']['notes'][0]['id'])) {
             throw new \Exception(

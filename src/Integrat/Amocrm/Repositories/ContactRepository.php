@@ -12,7 +12,9 @@ class ContactRepository extends AbstractRepository
     {
         $result = $this->request->post('/contacts', $data);
         if (empty($result['_embedded']['contacts'][0]['id'])) {
-            throw new \Exception('Не удалось создать контакт. Данные: ' . json_encode($data));
+            throw new \Exception(
+                'Не удалось создать контакт. Входящие данные: ' . print_r($data, true) . 'Ответ: ' . print_r($result, true)
+            );
         }
         return $result['_embedded']['contacts'][0]['id'];
     }
@@ -21,17 +23,29 @@ class ContactRepository extends AbstractRepository
     {
         $result = $this->request->patch('/contacts', $data);
         if (empty($result['_embedded']['contacts'][0]['id'])) {
-            throw new \Exception('Не удалось обновить контакт. Данные: ' . json_encode($data));
+            throw new \Exception(
+                'Не удалось обновить контакт. Входящие данные: ' . print_r($data, true) . 'Ответ: ' . print_r($result, true)
+            );
         }
         return true;
     }
 
+    /**
+     * Получить контакт по ID
+     * @param int $contactId
+     * @return ContactModel|null
+     */
     public function findById(int $contactId): ?ContactModel
     {
         $result = $this->request->get('/contacts/' . $contactId . '?with=leads,companies');
         return empty($result) ? null : new ContactModel($result);
     }
 
+    /**
+     * Найти контакт/контакты по полю
+     * @param string $fieldValue
+     * @return ContactModel[]
+     */
     public function findByField(string $fieldValue): array
     {
         $result = $this->request->get('/contacts?with=leads,companies&query=' . urlencode($fieldValue));
@@ -61,17 +75,28 @@ class ContactRepository extends AbstractRepository
         ]]);
         
         if (empty($linkResult['_embedded']['links'][0]['entity_id'])) {
-            throw new \Exception("Не удалось связать сделку {$createdLeadId} с контактом {$contactId}");
+            throw new \Exception("Не удалось связать сделку $createdLeadId с контактом $contactId");
         }
         
         return $createdLeadId;
     }
 
+    /**
+     * Получить все сделки контакта
+     * @param int $contactId
+     * @return LeadModel[]
+     */
     public function findAllLeads(int $contactId): array
     {
         return $this->findRelatedEntities($contactId, 'contacts', 'leads', LeadModel::class);
     }
 
+    /**
+     * Получить все активные сделки контакта
+     * @param int $contactId
+     * @param array $closedStatusIds
+     * @return LeadModel[]
+     */
     public function findActiveLeads(int $contactId, array $closedStatusIds = []): array
     {
         $leads = $this->findAllLeads($contactId);
@@ -88,7 +113,12 @@ class ContactRepository extends AbstractRepository
         return $this->findFirstRelatedEntity($contactId, 'contacts', 'companies', CompanyModel::class);
     }
 
-    public function findBulkContacts(array $contactIds): array
+    /**
+     * Получить массив контактов за 1 запрос
+     * @param array $contactIds
+     * @return ContactModel[]
+     */
+    public function findBulk(array $contactIds): array
     {
         return $this->loadEntitiesByIds('contacts', $contactIds, ContactModel::class);
     }

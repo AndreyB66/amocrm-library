@@ -137,7 +137,7 @@ class LinkService
     {
         $result = $this->request->get('/leads/' . $id . '/links');
 
-        if (empty($result['_embedded']['links'][0]['entity_id'])) {
+        if (empty($result['_embedded']['links'])) {
             return [];
         }
 
@@ -148,7 +148,7 @@ class LinkService
     {
         $result = $this->request->get('/contacts/' . $id . '/links');
 
-        if (empty($result['_embedded']['links'][0]['entity_id'])) {
+        if (empty($result['_embedded']['links'])) {
             return [];
         }
 
@@ -159,7 +159,7 @@ class LinkService
     {
         $result = $this->request->get('/companies/' . $id . '/links');
 
-        if (empty($result['_embedded']['links'][0]['entity_id'])) {
+        if (empty($result['_embedded']['links'])) {
             return [];
         }
 
