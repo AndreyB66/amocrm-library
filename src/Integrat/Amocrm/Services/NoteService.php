@@ -30,6 +30,17 @@ class NoteService
         return $result;
     }
 
+    public function findById(string $entityType, int $entityId, int $id): ?array
+    {
+        $result = $this->request->get('/' . $entityType . '/' . $entityId. '/notes/' . $id);
+
+        if (empty($result['id'])) {
+            return null;
+        }
+
+        return $result;
+    }
+
     public function updateById(string $entityType, int $entityId, int $noteId, array $data): array
     {
         if (!in_array($entityType, ['leads', 'contacts', 'companies'])) {
