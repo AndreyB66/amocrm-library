@@ -11,23 +11,27 @@ class LeadRepository extends AbstractRepository
     public function create(array $data): int
     {
         $result = $this->request->post('/leads', $data);
+        
         if (empty($result['_embedded']['leads'][0]['id'])) {
             throw new \Exception(
                 'Не удалось создать сделку. Входящие данные: ' . print_r($data, true) . 'Ответ: ' . print_r($result, true)
             );
         }
+
         return $result['_embedded']['leads'][0]['id'];
     }
 
-    public function update(array $data): bool
+    public function update(array $data): int
     {
         $result = $this->request->patch('/leads', $data);
+
         if (empty($result['_embedded']['leads'][0]['id'])) {
             throw new \Exception(
                 'Не удалось обновить сделку. Входящие данные: ' . print_r($data, true) . 'Ответ: ' . print_r($result, true)
             );
         }
-        return true;
+
+        return $result['_embedded']['leads'][0]['id'];
     }
 
     /**
