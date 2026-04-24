@@ -49,7 +49,7 @@ class NoteService
 
         $result = $this->request->patch('/' . $entityType . '/' . $entityId. '/notes/' . $noteId, $data);
 
-        if (empty($result['_embedded']['notes'][0]['id'])) {
+        if (empty($result['id'])) {
             throw new \Exception(
                 "Не удалось обновить примечание с $noteId для сущности $entityType c ID $entityId с данными: " . print_r($data, true)
             );
